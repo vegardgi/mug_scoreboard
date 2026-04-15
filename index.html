@@ -27,7 +27,7 @@
     #header {
       position: relative;
       display: flex; align-items: center; justify-content: center;
-      padding: 1.5vh 4vw;
+      padding: 0.8vh 4vw;
       border-bottom: 2px solid #FFD700;
       flex-shrink: 0;
     }
@@ -45,7 +45,7 @@
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.15} }
 
     /* ── Dot marquee ── */
-    #marquee-wrap { overflow: hidden; height: 3vh; display: flex; align-items: center; flex-shrink: 0; }
+    #marquee-wrap { overflow: hidden; height: 1.5vh; display: flex; align-items: center; flex-shrink: 0; }
     #marquee-track {
       display: inline-block; white-space: nowrap;
       color: rgba(255,215,0,0.28);
@@ -57,9 +57,9 @@
     /* ── Podium (top 3) ── */
     #podium {
       flex-shrink: 0;
-      padding: 1.2vh 4vw 0.8vh;
+      padding: 0.7vh 4vw 0.4vh;
       display: flex; flex-direction: column;
-      gap: 1vh;
+      gap: 0.6vh;
     }
     #podium-top  { display: flex; justify-content: center; }
     #podium-base { display: flex; gap: 2vw; }
@@ -72,8 +72,8 @@
       width: 64vw;
       flex-direction: column; align-items: center;
       text-align: center;
-      padding: 2vh 3vw;
-      gap: 0.7vh;
+      padding: 1.4vh 3vw;
+      gap: 0.5vh;
       border: 2px solid #FFD700;
       box-shadow: 0 0 32px rgba(255,215,0,0.5), 0 0 70px rgba(255,215,0,0.15);
       background: rgba(255,215,0,0.05);
@@ -96,7 +96,7 @@
     /* ── 2nd place: silver glow ── */
     #pod-2 {
       flex: 1; flex-direction: row; align-items: center;
-      padding: 1.4vh 2vw; gap: 1.5vw;
+      padding: 2.2vh 2vw; gap: 1.5vw;
       border: 2px solid #C0C0C0;
       box-shadow: 0 0 20px rgba(192,192,192,0.35);
       background: rgba(192,192,192,0.04);
@@ -108,7 +108,7 @@
     /* ── 3rd place: bronze glow ── */
     #pod-3 {
       flex: 1; flex-direction: row; align-items: center;
-      padding: 1.4vh 2vw; gap: 1.5vw;
+      padding: 2.2vh 2vw; gap: 1.5vw;
       border: 2px solid #CD7F32;
       box-shadow: 0 0 20px rgba(205,127,50,0.35);
       background: rgba(205,127,50,0.04);
@@ -120,7 +120,7 @@
     /* ── Column headers (list) ── */
     #col-headers {
       display: flex; align-items: center;
-      padding: 0.8vh 4vw 0.4vh;
+      padding: 0.3vh 4vw 0.2vh;
       color: rgba(255,215,0,0.4);
       font-size: clamp(0.3rem, 0.65vw, 0.55rem);
       letter-spacing: 0.14em;
@@ -129,8 +129,8 @@
 
     /* ── Rows (4–10) ── */
     #rows {
-      flex: 1; display: flex; flex-direction: column;
-      padding: 0 4vw 1.5vh; gap: 0.2vh;
+      flex: 1; min-height: 0; display: flex; flex-direction: column;
+      padding: 0 4vw 0.5vh; gap: 0.2vh;
     }
 
     .row {
@@ -159,28 +159,28 @@
     /* ── Recent additions ── */
     #recent-wrap {
       flex-shrink: 0;
-      padding: 0.5vh 4vw 0.8vh;
+      padding: 0.8vh 4vw 1.2vh;
       border-top: 1px solid rgba(255,215,0,0.15);
     }
     #recent-header {
       color: rgba(255,215,0,0.35);
-      font-size: clamp(0.28rem, 0.58vw, 0.48rem);
+      font-size: clamp(0.5rem, 1.1vw, 0.9rem);
       letter-spacing: 0.16em;
-      margin-bottom: 0.4vh;
+      margin-bottom: 0.7vh;
     }
-    #recent-list { display: flex; flex-direction: column; gap: 0.15vh; }
+    #recent-list { display: flex; flex-direction: column; gap: 0.4vh; }
     .recent-row {
       display: flex; align-items: center;
-      font-size: clamp(0.42rem, 0.88vw, 0.74rem);
-      color: rgba(255,255,255,0.38);
+      font-size: clamp(0.78rem, 1.65vw, 1.38rem);
+      color: rgba(255,255,255,0.45);
     }
     .recent-name  { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 1vw; }
-    .recent-score { width: 12vw; text-align: right; font-variant-numeric: tabular-nums; }
-    .recent-time  { width: 8vw;  text-align: right; color: rgba(255,215,0,0.3); padding-left: 2vw; }
+    .recent-score { width: 14vw; text-align: right; font-variant-numeric: tabular-nums; }
+    .recent-time  { width: 9vw;  text-align: right; color: rgba(255,215,0,0.4); padding-left: 2vw; }
 
     /* ── Pac-Man eating animation ── */
     .letter { display: inline-block; transition: opacity 0.08s, transform 0.08s; }
-    .letter.eaten { opacity: 0; transform: scale(0.2); }
+    .letter.eaten { opacity: 0; transform: scale(0); }
 
     #pacman-icon { position: relative; }
     #pacman-icon.eating { transition: transform 1.5s linear; }
@@ -241,7 +241,7 @@
   <div id="rows"></div>
 
   <div id="recent-wrap">
-    <div id="recent-header">SIST LAGT TIL</div>
+    <div id="recent-header">SIST SPILT</div>
     <div id="recent-list"></div>
   </div>
 </div>
