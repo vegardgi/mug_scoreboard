@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIGH SCORES</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #0a0a0a;
+      font-family: 'Press Start 2P', monospace;
+      color: #fff;
+    }
+
+    #app {
+      width: 100vw; height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── Header ── */
+    #header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5vh 4vw;
+      border-bottom: 2px solid #FFD700;
+      flex-shrink: 0;
+    }
+    #header-left { display: flex; align-items: center; gap: 1.5vw; }
+    #title { color: #FFD700; font-size: clamp(0.9rem, 2.4vw, 2rem); letter-spacing: 0.1em; }
+
+    #live { display: flex; align-items: center; gap: 0.6vw; }
+    #live-dot {
+      width: clamp(8px, 1vw, 14px); height: clamp(8px, 1vw, 14px);
+      border-radius: 50%; background: #00FF41;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    #live-text { color: #00FF41; font-size: clamp(0.35rem, 0.85vw, 0.7rem); }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.15} }
+
+    /* ── Dot marquee ── */
+    #marquee-wrap { overflow: hidden; height: 3vh; display: flex; align-items: center; flex-shrink: 0; }
+    #marquee-track {
+      display: inline-block; white-space: nowrap;
+      color: rgba(255,215,0,0.28);
+      font-size: clamp(0.4rem, 0.9vw, 0.75rem);
+      animation: marquee 22s linear infinite;
+    }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── Column headers ── */
+    #col-headers {
+      display: flex; align-items: center;
+      padding: 0 4vw 0.8vh;
+      color: rgba(255,215,0,0.4);
+      font-size: clamp(0.3rem, 0.65vw, 0.55rem);
+      letter-spacing: 0.14em;
+      flex-shrink: 0;
+    }
+
+    /* ── Rows ── */
+    #rows {
+      flex: 1; display: flex; flex-direction: column;
+      padding: 0 4vw 2vh; gap: 0.2vh;
+    }
+
+    .row {
+      flex: 1; display: flex; align-items: center;
+      border-bottom: 1px solid rgba(255,215,0,0.07);
+      animation: slideIn 0.38s ease both;
+    }
+    .row.placeholder { opacity: 0.18; }
+    .row.flash { animation: flashRow 0.55s ease !important; }
+
+    @keyframes slideIn { from{opacity:0;transform:translateX(-50px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes flashRow { 0%,100%{background:transparent} 50%{background:rgba(255,215,0,0.13)} }
+
+    /* ── Cell widths ── */
+    .col-rank  { width: 10vw; text-align: right; flex-shrink: 0; }
+    .col-name  { flex: 1; padding-left: 3vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .col-score { width: 15vw; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+
+    .rank-num  { font-size: clamp(0.55rem, 1.15vw, 1rem); }
+    .name-text { font-size: clamp(0.65rem, 1.65vw, 1.4rem); }
+    .score-num { font-size: clamp(0.65rem, 1.65vw, 1.4rem); }
+
+    .gold   { color: #FFD700; }
+    .silver { color: #C0C0C0; }
+    .bronze { color: #CD7F32; }
+    .normal { color: #ffffff; }
+    .empty  { color: #3a3a3a; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <div id="header">
+    <div id="header-left">
+      <svg width="40" height="40" viewBox="0 0 48 48" style="width:clamp(22px,3.2vw,44px);height:clamp(22px,3.2vw,44px)">
+        <path d="M24 24 L46 9 A23 23 0 1 0 46 39 Z" fill="#FFD700"/>
+      </svg>
+      <span id="title">HIGH SCORES</span>
+    </div>
+    <div id="live">
+      <div id="live-dot"></div>
+      <span id="live-text">LIVE</span>
+    </div>
+  </div>
+
+  <div id="marquee-wrap"><span id="marquee-track"></span></div>
+
+  <div id="col-headers">
+    <span class="col-rank">RANK</span>
+    <span class="col-name">NAVN</span>
+    <span class="col-score">SCORE</span>
+  </div>
+
+  <div id="rows"></div>
+</div>
+
+<script>
+  const REPO    = 'vegardgi/mug_scoreboard';
+  const RAW_URL = `https://raw.githubusercontent.com/${REPO}/main/players.json`;
+
+  // Dot marquee
+  const dots = '· · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · ';
+  document.getElementById('marquee-track').textContent = dots + dots;
+
+  const RANK_COLORS = { 1:'gold', 2:'silver', 3:'bronze' };
+  const RANK_LABELS = { 1:'1ST',  2:'2ND',   3:'3RD'   };
+  function rankLabel(r) { return RANK_LABELS[r] || `${r}TH`; }
+  function rankClass(r) { return RANK_COLORS[r] || 'normal'; }
+
+  let prevScores = {};
+
+  function renderRows(players) {
+    const container = document.getElementById('rows');
+    const rows = [...players];
+    while (rows.length < 10) rows.push(null);
+
+    // Track which IDs changed score
+    const flashIds = new Set();
+    players.forEach(p => {
+      if (prevScores[p.id] !== undefined && prevScores[p.id] !== p.score) {
+        flashIds.add(p.id);
+      }
+    });
+
+    container.innerHTML = '';
+    rows.forEach((p, i) => {
+      const rank = i + 1;
+      const cls  = p ? rankClass(rank) : 'empty';
+      const div  = document.createElement('div');
+      div.className = 'row' + (p ? '' : ' placeholder');
+      div.style.animationDelay = `${i * 0.055}s`;
+      if (p && flashIds.has(p.id)) div.classList.add('flash');
+
+      div.innerHTML = `
+        <span class="col-rank rank-num ${cls}">${rankLabel(rank)}</span>
+        <span class="col-name name-text ${cls}">${p ? escHtml(p.name) : '———'}</span>
+        <span class="col-score score-num ${cls}">${p ? p.score.toLocaleString('no-NO') : '· · ·'}</span>
+      `;
+      container.appendChild(div);
+    });
+
+    prevScores = {};
+    players.forEach(p => { prevScores[p.id] = p.score; });
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  async function fetchAndRender() {
+    try {
+      const res  = await fetch(`${RAW_URL}?t=${Date.now()}`, { cache: 'no-store' });
+      const data = await res.json();
+      const top10 = (data.players || [])
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+      renderRows(top10);
+    } catch {
+      // Keep showing current data on network error
+    }
+  }
+
+  renderRows([]);
+  fetchAndRender();
+  setInterval(fetchAndRender, 2000);
+</script>
+</body>
+</html>
