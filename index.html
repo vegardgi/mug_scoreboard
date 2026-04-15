@@ -136,40 +136,47 @@
   function rankLabel(r) { return RANK_LABELS[r] || `${r}TH`; }
   function rankClass(r) { return RANK_COLORS[r] || 'normal'; }
 
-  let prevScores = {};
+  let initialized = false;
 
   function renderRows(players) {
     const container = document.getElementById('rows');
     const rows = [...players];
     while (rows.length < 10) rows.push(null);
 
-    // Track which IDs changed score
-    const flashIds = new Set();
-    players.forEach(p => {
-      if (prevScores[p.id] !== undefined && prevScores[p.id] !== p.score) {
-        flashIds.add(p.id);
-      }
-    });
+    // First render: build all 10 row elements with slide-in animation
+    if (!initialized) {
+      container.innerHTML = '';
+      rows.forEach((p, i) => {
+        const div = document.createElement('div');
+        div.className = 'row' + (p ? '' : ' placeholder');
+        div.style.animationDelay = `${i * 0.055}s`;
+        div.innerHTML = `
+          <span class="col-rank rank-num"></span>
+          <span class="col-name name-text"></span>
+          <span class="col-score score-num"></span>
+        `;
+        container.appendChild(div);
+      });
+      initialized = true;
+    }
 
-    container.innerHTML = '';
+    // All subsequent renders: update text/classes in-place — no DOM rebuild, no flash
+    const divs = container.querySelectorAll('.row');
     rows.forEach((p, i) => {
       const rank = i + 1;
       const cls  = p ? rankClass(rank) : 'empty';
-      const div  = document.createElement('div');
+      const div  = divs[i];
       div.className = 'row' + (p ? '' : ' placeholder');
-      div.style.animationDelay = `${i * 0.055}s`;
-      if (p && flashIds.has(p.id)) div.classList.add('flash');
 
-      div.innerHTML = `
-        <span class="col-rank rank-num ${cls}">${rankLabel(rank)}</span>
-        <span class="col-name name-text ${cls}">${p ? escHtml(p.name) : '———'}</span>
-        <span class="col-score score-num ${cls}">${p ? p.score.toLocaleString('no-NO') : '· · ·'}</span>
-      `;
-      container.appendChild(div);
+      div.querySelector('.col-rank').className = `col-rank rank-num ${cls}`;
+      div.querySelector('.col-rank').textContent = rankLabel(rank);
+
+      div.querySelector('.col-name').className = `col-name name-text ${cls}`;
+      div.querySelector('.col-name').textContent = p ? p.name : '———';
+
+      div.querySelector('.col-score').className = `col-score score-num ${cls}`;
+      div.querySelector('.col-score').textContent = p ? p.score.toLocaleString('no-NO') : '· · ·';
     });
-
-    prevScores = {};
-    players.forEach(p => { prevScores[p.id] = p.score; });
   }
 
   function escHtml(s) {
