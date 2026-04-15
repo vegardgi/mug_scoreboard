@@ -1,1 +1,12 @@
-{"players":[]}
+{
+  "players": [
+    {
+      "id": 1776245769578,
+      "name": "Adam Halsall",
+      "score": 13050,
+      "age": 34,
+      "email": "adamjhalsall@gmail.com",
+      "phone": null
+    }
+  ]
+}
