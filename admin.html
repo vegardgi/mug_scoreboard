@@ -139,6 +139,7 @@
     </div>
     <div id="top-actions">
       <a href="index.html" target="_blank" class="btn btn-ghost">Vis scoreboard ↗</a>
+      <button class="btn btn-ghost" onclick="exportCSV()">Eksporter CSV</button>
       <button class="btn btn-primary" onclick="openAddModal()">+ Legg til spiller</button>
       <button class="btn btn-logout" onclick="logout()">Logg ut</button>
     </div>
@@ -411,6 +412,28 @@
     } catch {
       showStatus('Sletting feilet.', 'error'); loadPlayers();
     }
+  }
+
+  // ── CSV export ──
+  function exportCSV() {
+    const headers = ['ID', 'Navn', 'Score', 'Alder', 'E-post', 'Telefon', 'Lagt til'];
+    const rows = [...players].sort((a, b) => b.score - a.score).map(p => [
+      p.id,
+      p.name,
+      p.score,
+      p.age  ?? '',
+      p.email ?? '',
+      p.phone ?? '',
+      p.createdAt ? new Date(p.createdAt).toLocaleString('no-NO') : ''
+    ]);
+    const csv = '\uFEFF' + [headers, ...rows]
+      .map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'))
+      .join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = `scoreboard_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
   }
 
   // ── Init ──
