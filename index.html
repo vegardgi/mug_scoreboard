@@ -321,6 +321,8 @@
   // ── Podium (top 3) ──
   const prevPodium = { 1: null, 2: null, 3: null };
   function renderPodium(top3) {
+    let triggerRank = null; // highest-priority rank that changed (lowest number)
+
     [1, 2, 3].forEach(rank => {
       const p    = top3[rank - 1] || null;
       const slot = document.getElementById(`pod-${rank}`);
@@ -331,12 +333,18 @@
       slot.querySelector('.pod-score').textContent = p ? p.score.toLocaleString('no-NO') : '· · ·';
 
       if (p && p.name !== prevPodium[rank]) {
-        if (prevPodium[rank] !== null) launchFireworks(slot, rank);
+        // Only record the first (most important) changed rank
+        if (prevPodium[rank] !== null && triggerRank === null) triggerRank = rank;
         prevPodium[rank] = p.name;
       } else if (!p) {
         prevPodium[rank] = null;
       }
     });
+
+    // Fire once, for the highest-priority changed slot
+    if (triggerRank !== null) {
+      launchFireworks(document.getElementById(`pod-${triggerRank}`), triggerRank);
+    }
   }
 
   // ── List (4th–10th) ──
