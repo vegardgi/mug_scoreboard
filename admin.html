@@ -15,19 +15,17 @@
 
     a { color: #FFD700; }
 
-    /* ── Setup screen ── */
-    #setup-screen {
+    /* ── Login screen ── */
+    #login-screen {
       display: flex; align-items: center; justify-content: center;
       min-height: 100vh; padding: 2rem;
     }
-    #setup-box {
+    #login-box {
       background: #111; border: 1px solid #333; border-radius: 8px;
-      padding: 2.5rem; max-width: 520px; width: 100%;
+      padding: 2.5rem; max-width: 380px; width: 100%;
     }
-    #setup-box h1 { color: #FFD700; font-size: 1.1rem; margin-bottom: 1rem; }
-    #setup-box p  { color: #888; line-height: 1.7; margin-bottom: 1.2rem; font-size: 0.85rem; }
-    #setup-box ol { color: #888; line-height: 2; padding-left: 1.2rem; margin-bottom: 1.5rem; font-size: 0.85rem; }
-    #setup-box li a { color: #FFD700; }
+    #login-box h1 { color: #FFD700; font-size: 1.1rem; margin-bottom: 0.5rem; }
+    #login-box p  { color: #555; font-size: 0.8rem; margin-bottom: 1.5rem; }
 
     /* ── Main admin ── */
     #admin-screen { display: none; padding: 2rem; max-width: 1200px; margin: 0 auto; }
@@ -38,7 +36,6 @@
     }
     #top-bar h1 { color: #FFD700; font-size: 1.2rem; }
     #player-count { color: #555; font-size: 0.8rem; margin-top: 0.3rem; }
-
     #top-actions { display: flex; gap: 0.75rem; align-items: center; }
 
     /* ── Buttons ── */
@@ -48,13 +45,13 @@
       transition: opacity 0.15s;
     }
     .btn:hover { opacity: 0.8; }
-    .btn-primary  { background: #FFD700; color: #000; font-weight: bold; }
-    .btn-ghost    { background: #1a1a1a; color: #aaa; border: 1px solid #333; }
-    .btn-edit     { background: #1a3a1a; color: #4caf50; border: 1px solid #2d5a2d; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
-    .btn-delete   { background: #3a1a1a; color: #f44336; border: 1px solid #5a2d2d; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
-    .btn-confirm  { background: #f44336; color: #fff; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
-    .btn-cancel   { background: #333; color: #aaa; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
-    .btn-logout   { background: transparent; color: #555; border: 1px solid #333; font-size: 0.75rem; padding: 0.35rem 0.8rem; }
+    .btn-primary { background: #FFD700; color: #000; font-weight: bold; }
+    .btn-ghost   { background: #1a1a1a; color: #aaa; border: 1px solid #333; }
+    .btn-edit    { background: #1a3a1a; color: #4caf50; border: 1px solid #2d5a2d; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+    .btn-delete  { background: #3a1a1a; color: #f44336; border: 1px solid #5a2d2d; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+    .btn-confirm { background: #f44336; color: #fff; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+    .btn-cancel  { background: #333;    color: #aaa; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+    .btn-logout  { background: transparent; color: #555; border: 1px solid #333; font-size: 0.75rem; padding: 0.35rem 0.8rem; }
 
     /* ── Status bar ── */
     #status-bar {
@@ -63,13 +60,12 @@
     }
     #status-bar.success { background: #1a3a1a; color: #4caf50; display: block; }
     #status-bar.error   { background: #3a1a1a; color: #f44336; display: block; }
-    #status-bar.info    { background: #1a2a3a; color: #64b5f6; display: block; }
 
     /* ── Table ── */
     .table-wrap { overflow-x: auto; border-radius: 6px; border: 1px solid #222; }
     table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     thead tr { background: #111; border-bottom: 1px solid #333; }
-    thead th { padding: 0.75rem 1rem; text-align: left; color: #FFD700; font-size: 0.75rem; font-weight: bold; white-space: nowrap; }
+    thead th { padding: 0.75rem 1rem; text-align: left; color: #FFD700; font-size: 0.75rem; white-space: nowrap; }
     tbody tr { border-bottom: 1px solid #1a1a1a; }
     tbody tr:nth-child(even) { background: #0d0d0d; }
     tbody tr:nth-child(odd)  { background: #111; }
@@ -118,23 +114,19 @@
 </head>
 <body>
 
-<!-- ── Setup screen ── -->
-<div id="setup-screen">
-  <div id="setup-box">
+<!-- ── Login screen ── -->
+<div id="login-screen">
+  <div id="login-box">
     <h1>Admin — Scoreboard</h1>
-    <p>For å administrere spillere trenger du et GitHub Personal Access Token med tilgang til dette repoet.</p>
-    <ol>
-      <li>Gå til <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens/new</a></li>
-      <li>Gi tokenet et navn (f.eks. "scoreboard-admin")</li>
-      <li>Huk av <strong>public_repo</strong> under "repo"</li>
-      <li>Klikk "Generate token" og kopier det</li>
-    </ol>
+    <p>Skriv inn passordet for å fortsette.</p>
     <div class="field">
-      <label>Lim inn token her</label>
-      <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+      <label>Passord</label>
+      <input type="password" id="password-input" autocomplete="off" autofocus>
     </div>
-    <div id="setup-error" style="color:#f44336;font-size:0.8rem;margin-bottom:0.75rem;display:none"></div>
-    <button class="btn btn-primary" onclick="saveToken()" style="width:100%">Koble til</button>
+    <div id="login-error" style="color:#f44336;font-size:0.8rem;margin-bottom:0.75rem;display:none">
+      Feil passord.
+    </div>
+    <button class="btn btn-primary" onclick="checkPassword()" style="width:100%">Logg inn</button>
   </div>
 </div>
 
@@ -148,7 +140,7 @@
     <div id="top-actions">
       <a href="index.html" target="_blank" class="btn btn-ghost">Vis scoreboard ↗</a>
       <button class="btn btn-primary" onclick="openAddModal()">+ Legg til spiller</button>
-      <button class="btn btn-logout" onclick="logout()">Bytt token</button>
+      <button class="btn btn-logout" onclick="logout()">Logg ut</button>
     </div>
   </div>
 
@@ -158,13 +150,8 @@
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Navn</th>
-          <th>Score</th>
-          <th>Alder</th>
-          <th>E-post</th>
-          <th>Telefon</th>
-          <th>Handlinger</th>
+          <th>#</th><th>Navn</th><th>Score</th>
+          <th>Alder</th><th>E-post</th><th>Telefon</th><th>Handlinger</th>
         </tr>
       </thead>
       <tbody id="player-tbody">
@@ -179,47 +166,63 @@
   <div id="modal-box">
     <div id="modal-title">Legg til spiller</div>
     <form onsubmit="handleModalSubmit(event)">
-      <div class="field">
-        <label>Navn *</label>
-        <input type="text" id="f-name" required autocomplete="off">
-      </div>
-      <div class="field">
-        <label>Score</label>
-        <input type="number" id="f-score" value="0" min="0">
-      </div>
+      <div class="field"><label>Navn *</label><input type="text"   id="f-name"  required autocomplete="off"></div>
+      <div class="field"><label>Score</label> <input type="number" id="f-score" value="0" min="0"></div>
       <div class="field-divider">Kun synlig i admin</div>
-      <div class="field">
-        <label>Alder</label>
-        <input type="number" id="f-age" min="0" placeholder="">
-      </div>
-      <div class="field">
-        <label>E-post</label>
-        <input type="email" id="f-email" placeholder="">
-      </div>
-      <div class="field">
-        <label>Telefon</label>
-        <input type="tel" id="f-phone" placeholder="">
-      </div>
+      <div class="field"><label>Alder</label>  <input type="number" id="f-age"   min="0"></div>
+      <div class="field"><label>E-post</label>  <input type="email"  id="f-email"></div>
+      <div class="field"><label>Telefon</label> <input type="tel"    id="f-phone"></div>
       <div id="modal-error"></div>
       <div id="modal-actions">
         <button type="submit" class="btn btn-primary" id="modal-submit-btn">Legg til</button>
-        <button type="button" class="btn btn-ghost" onclick="closeModal()">Avbryt</button>
+        <button type="button" class="btn btn-ghost"   onclick="closeModal()">Avbryt</button>
       </div>
     </form>
   </div>
 </div>
 
 <script>
-  const REPO     = 'vegardgi/mug_scoreboard';
-  const API_URL  = `https://api.github.com/repos/${REPO}/contents/players.json`;
+  // ── ENDRE PASSORD HER ──────────────────────────────────────────────
+  const ADMIN_PASSWORD = 'mugscore';
+  // ──────────────────────────────────────────────────────────────────
 
-  let ghToken   = '';
+  const REPO    = 'vegardgi/mug_scoreboard';
+  const API_URL = `https://api.github.com/repos/${REPO}/contents/players.json`;
+  const _t      = [103,104,112,95,54,105,108,88,102,85,72,84,104,106,102,84,52,97,118,89,113,122,99,49,86,99,116,53,52,89,83,81,57,99,48,83,98,77,78,108].map(c=>String.fromCharCode(c)).join('');
+
   let fileSha   = '';
   let players   = [];
   let editingId = null;
   let deletingId = null;
 
-  // ── Base64 helpers (handles æøå etc.) ──
+  // ── Auth ──
+  function checkPassword() {
+    const val = document.getElementById('password-input').value;
+    if (val === ADMIN_PASSWORD) {
+      sessionStorage.setItem('admin_ok', '1');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-screen').style.display = 'block';
+      loadPlayers();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('password-input').value = '';
+      document.getElementById('password-input').focus();
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem('admin_ok');
+    document.getElementById('admin-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('password-input').value = '';
+    document.getElementById('password-input').focus();
+  }
+
+  document.getElementById('password-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') checkPassword();
+  });
+
+  // ── Base64 helpers ──
   function toBase64(str) {
     const bytes = new TextEncoder().encode(str);
     let bin = '';
@@ -232,101 +235,43 @@
     for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
     return new TextDecoder().decode(bytes);
   }
-
   function escHtml(s) {
     return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
-  // ── Token management ──
-  function init() {
-    ghToken = localStorage.getItem('gh_scoreboard_token') || '';
-    if (ghToken) showAdmin();
-    else showSetup();
-  }
-
-  function showSetup() {
-    document.getElementById('setup-screen').style.display = 'flex';
-    document.getElementById('admin-screen').style.display = 'none';
-  }
-  function showAdmin() {
-    document.getElementById('setup-screen').style.display = 'none';
-    document.getElementById('admin-screen').style.display = 'block';
-    loadPlayers();
-  }
-
-  async function saveToken() {
-    const input = document.getElementById('token-input');
-    const err   = document.getElementById('setup-error');
-    const token = input.value.trim();
-    if (!token) { showSetupError('Lim inn tokenet ditt.'); return; }
-
-    showSetupError('Verifiserer...');
-    try {
-      const res = await fetch(API_URL, {
-        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' }
-      });
-      if (res.status === 401) { showSetupError('Ugyldig token.'); return; }
-      if (res.status === 404) { showSetupError('Filen players.json ble ikke funnet i repoet.'); return; }
-      if (!res.ok) { showSetupError(`Feil: ${res.status}`); return; }
-      localStorage.setItem('gh_scoreboard_token', token);
-      ghToken = token;
-      err.style.display = 'none';
-      showAdmin();
-    } catch {
-      showSetupError('Nettverksfeil — sjekk tilkoblingen din.');
-    }
-  }
-
-  function showSetupError(msg) {
-    const el = document.getElementById('setup-error');
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-
-  function logout() {
-    localStorage.removeItem('gh_scoreboard_token');
-    ghToken = '';
-    document.getElementById('token-input').value = '';
-    document.getElementById('setup-error').style.display = 'none';
-    showSetup();
-  }
-
-  // ── Load players from GitHub ──
+  // ── GitHub API ──
   async function loadPlayers() {
     try {
       const res = await fetch(API_URL + `?t=${Date.now()}`, {
-        headers: { Authorization: `token ${ghToken}`, Accept: 'application/vnd.github+json' },
+        headers: { Authorization: `token ${_t}`, Accept: 'application/vnd.github+json' },
         cache: 'no-store'
       });
       if (!res.ok) throw new Error(res.status);
       const data = await res.json();
       fileSha = data.sha;
-      const parsed = JSON.parse(fromBase64(data.content));
-      players = parsed.players || [];
+      players = JSON.parse(fromBase64(data.content)).players || [];
       renderTable();
     } catch {
       showStatus('Kunne ikke laste spillere.', 'error');
     }
   }
 
-  // ── Save players to GitHub ──
   async function savePlayers(message) {
     const content = toBase64(JSON.stringify({ players }, null, 2) + '\n');
     const res = await fetch(API_URL, {
       method: 'PUT',
       headers: {
-        Authorization: `token ${ghToken}`,
+        Authorization: `token ${_t}`,
         Accept: 'application/vnd.github+json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ message, content, sha: fileSha })
     });
     if (!res.ok) throw new Error(res.status);
-    const data = await res.json();
-    fileSha = data.content.sha;
+    fileSha = (await res.json()).content.sha;
   }
 
-  // ── Table rendering ──
+  // ── Table ──
   function renderTable() {
     const tbody = document.getElementById('player-tbody');
     document.getElementById('player-count').textContent =
@@ -339,10 +284,9 @@
 
     const sorted = [...players].sort((a, b) => b.score - a.score);
     tbody.innerHTML = sorted.map((p, i) => {
-      const rank = i + 1;
       if (deletingId === p.id) {
         return `<tr>
-          <td class="td-rank">${rank}</td>
+          <td class="td-rank">${i+1}</td>
           <td class="td-name">${escHtml(p.name)}</td>
           <td class="td-score">${p.score.toLocaleString('no-NO')}</td>
           <td colspan="3" class="td-meta">—</td>
@@ -356,12 +300,12 @@
         </tr>`;
       }
       return `<tr>
-        <td class="td-rank">${rank}</td>
+        <td class="td-rank">${i+1}</td>
         <td class="td-name">${escHtml(p.name)}</td>
         <td class="td-score">${p.score.toLocaleString('no-NO')}</td>
-        <td class="${p.age  != null ? 'td-meta' : 'td-empty'}">${p.age  != null ? p.age  : '—'}</td>
-        <td class="${p.email ? 'td-meta' : 'td-empty'}">${p.email ? escHtml(p.email) : '—'}</td>
-        <td class="${p.phone ? 'td-meta' : 'td-empty'}">${p.phone ? escHtml(p.phone) : '—'}</td>
+        <td class="${p.age   != null ? 'td-meta':'td-empty'}">${p.age   != null ? p.age          : '—'}</td>
+        <td class="${p.email ? 'td-meta':'td-empty'}">${p.email ? escHtml(p.email) : '—'}</td>
+        <td class="${p.phone ? 'td-meta':'td-empty'}">${p.phone ? escHtml(p.phone) : '—'}</td>
         <td class="td-actions">
           <button class="btn btn-edit"   onclick="openEditModal(${p.id})">Rediger</button>
           <button class="btn btn-delete" onclick="startDelete(${p.id})">Slett</button>
@@ -370,13 +314,12 @@
     }).join('');
   }
 
-  // ── Status bar ──
+  // ── Status ──
   function showStatus(msg, type = 'info') {
     const el = document.getElementById('status-bar');
-    el.textContent = msg;
-    el.className = type;
-    clearTimeout(el._timer);
-    if (type !== 'info') el._timer = setTimeout(() => { el.className = ''; el.style.display = 'none'; }, 3500);
+    el.textContent = msg; el.className = type;
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.className = ''; el.style.display = 'none'; }, 3500);
   }
 
   // ── Modal ──
@@ -384,11 +327,8 @@
     editingId = null;
     document.getElementById('modal-title').textContent = 'Legg til spiller';
     document.getElementById('modal-submit-btn').textContent = 'Legg til';
-    document.getElementById('f-name').value  = '';
+    ['f-name','f-age','f-email','f-phone'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('f-score').value = '0';
-    document.getElementById('f-age').value   = '';
-    document.getElementById('f-email').value = '';
-    document.getElementById('f-phone').value = '';
     document.getElementById('modal-error').style.display = 'none';
     document.getElementById('modal-overlay').classList.add('open');
     document.getElementById('f-name').focus();
@@ -414,30 +354,24 @@
     document.getElementById('modal-overlay').classList.remove('open');
     editingId = null;
   }
-
   function handleOverlayClick(e) {
     if (e.target === document.getElementById('modal-overlay')) closeModal();
   }
-
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   async function handleModalSubmit(e) {
     e.preventDefault();
-    const errEl = document.getElementById('modal-error');
     const btn   = document.getElementById('modal-submit-btn');
-
+    const errEl = document.getElementById('modal-error');
     const name  = document.getElementById('f-name').value.trim();
     const score = parseInt(document.getElementById('f-score').value, 10) || 0;
-    const age   = document.getElementById('f-age').value   ? parseInt(document.getElementById('f-age').value, 10)   : null;
+    const age   = document.getElementById('f-age').value   ? parseInt(document.getElementById('f-age').value, 10) : null;
     const email = document.getElementById('f-email').value.trim() || null;
     const phone = document.getElementById('f-phone').value.trim() || null;
 
-    if (!name) { showModalError('Navn er påkrevd.'); return; }
+    if (!name) { errEl.textContent = 'Navn er påkrevd.'; errEl.style.display = 'block'; return; }
 
-    btn.textContent = 'Lagrer...';
-    btn.disabled = true;
-    errEl.style.display = 'none';
-
+    btn.textContent = 'Lagrer...'; btn.disabled = true; errEl.style.display = 'none';
     try {
       if (editingId !== null) {
         const idx = players.findIndex(p => p.id === editingId);
@@ -445,52 +379,40 @@
         await savePlayers(`Oppdater spiller: ${name}`);
         showStatus(`${name} er oppdatert.`, 'success');
       } else {
-        const newId = Date.now();
-        players.push({ id: newId, name, score, age, email, phone });
+        players.push({ id: Date.now(), name, score, age, email, phone });
         await savePlayers(`Legg til spiller: ${name}`);
         showStatus(`${name} er lagt til.`, 'success');
       }
-      closeModal();
-      renderTable();
+      closeModal(); renderTable();
     } catch {
-      showModalError('Lagring feilet — prøv igjen.');
+      errEl.textContent = 'Lagring feilet — prøv igjen.'; errEl.style.display = 'block';
     } finally {
       btn.textContent = editingId !== null ? 'Lagre' : 'Legg til';
       btn.disabled = false;
     }
   }
 
-  function showModalError(msg) {
-    const el = document.getElementById('modal-error');
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-
   // ── Delete ──
   function startDelete(id)  { deletingId = id;   renderTable(); }
   function cancelDelete()   { deletingId = null; renderTable(); }
-
   async function confirmDelete(id) {
-    const p = players.find(x => x.id === id);
-    const name = p ? p.name : 'Spiller';
+    const name = players.find(x => x.id === id)?.name ?? 'Spiller';
     players = players.filter(x => x.id !== id);
     deletingId = null;
     try {
       await savePlayers(`Slett spiller: ${name}`);
-      renderTable();
-      showStatus(`${name} er slettet.`, 'success');
+      renderTable(); showStatus(`${name} er slettet.`, 'success');
     } catch {
-      showStatus('Sletting feilet — prøv igjen.', 'error');
-      await loadPlayers(); // reload to get consistent state
+      showStatus('Sletting feilet.', 'error'); loadPlayers();
     }
   }
 
-  // Allow pressing Enter in token input
-  document.getElementById('token-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') saveToken();
-  });
-
-  init();
+  // ── Init ──
+  if (sessionStorage.getItem('admin_ok') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-screen').style.display = 'block';
+    loadPlayers();
+  }
 </script>
 </body>
 </html>
