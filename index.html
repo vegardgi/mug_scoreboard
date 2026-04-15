@@ -94,6 +94,19 @@
     .bronze { color: #CD7F32; }
     .normal { color: #ffffff; }
     .empty  { color: #3a3a3a; }
+
+    /* ── Pac-Man eating animation ── */
+    .letter { display: inline-block; transition: opacity 0.08s, transform 0.08s; }
+    .letter.eaten { opacity: 0; transform: scale(0.2); }
+
+    #pacman-icon { position: relative; }
+    #pacman-icon.eating { transition: transform 1.5s linear; }
+
+    @keyframes chomp {
+      0%, 100% { d: path('M24 24 L46 9 A23 23 0 1 0 46 39 Z'); }
+      50%       { d: path('M24 24 L46 21 A23 23 0 1 0 46 27 Z'); }
+    }
+    #pacman-icon.eating path { animation: chomp 0.18s linear infinite; }
   </style>
 </head>
 <body>
@@ -104,7 +117,7 @@
       <svg width="40" height="40" viewBox="0 0 48 48" style="width:clamp(22px,3.2vw,44px);height:clamp(22px,3.2vw,44px)">
         <path d="M24 24 L46 9 A23 23 0 1 0 46 39 Z" fill="#FFD700"/>
       </svg>
-      <span id="title">HIGH SCORES</span>
+      <span id="title"><span class="letter">H</span><span class="letter">I</span><span class="letter">G</span><span class="letter">H</span><span class="letter">&nbsp;</span><span class="letter">S</span><span class="letter">C</span><span class="letter">O</span><span class="letter">R</span><span class="letter">E</span><span class="letter">S</span></span>
     </div>
     <div id="live">
       <div id="live-dot"></div>
@@ -207,6 +220,43 @@
       // Keep showing current data on network error
     }
   }
+
+  // ── Pac-Man eating animation ──
+  function eatTitle() {
+    const pac     = document.getElementById('pacman-icon');
+    const title   = document.getElementById('title');
+    const letters = [...title.querySelectorAll('.letter')];
+    if (pac.classList.contains('eating')) return; // already running
+
+    // Distance Pac-Man must travel = gap + full title width
+    const gap      = pac.getBoundingClientRect().right - pac.parentElement.getBoundingClientRect().left;
+    const dist     = gap + title.getBoundingClientRect().width + pac.getBoundingClientRect().width;
+
+    // 1. Start moving + chomping
+    pac.classList.add('eating');
+    pac.style.transform = `translateX(${dist}px)`;
+
+    // 2. Eat letters staggered over 1.3s
+    const eatDuration = 1300;
+    letters.forEach((l, i) => {
+      setTimeout(() => l.classList.add('eaten'), (i / letters.length) * eatDuration);
+    });
+
+    // 3. After slide completes: snap Pac-Man back instantly
+    setTimeout(() => {
+      pac.classList.remove('eating');       // remove transition
+      pac.style.transform = 'translateX(0)'; // snap back
+    }, 1600);
+
+    // 4. Restore letters one by one
+    setTimeout(() => {
+      letters.forEach((l, i) => {
+        setTimeout(() => l.classList.remove('eaten'), i * 55);
+      });
+    }, 2000);
+  }
+
+  setInterval(eatTitle, 15000);
 
   renderRows([]);
   fetchAndRender();
