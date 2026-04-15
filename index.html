@@ -280,7 +280,7 @@
     const rect   = slot.getBoundingClientRect();
     const cx     = rect.left + rect.width  / 2;
     const cy     = rect.top  + rect.height / 2;
-    const bursts = 3;
+    const bursts = 8;
     for (let b = 0; b < bursts; b++) {
       setTimeout(() => {
         const bx = cx + (Math.random() - 0.5) * rect.width  * 0.8;
@@ -300,7 +300,7 @@
           document.body.appendChild(p);
           setTimeout(() => p.remove(), 950);
         }
-      }, b * 220);
+      }, b * 300);
     }
   }
 
