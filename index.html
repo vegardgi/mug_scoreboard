@@ -23,17 +23,18 @@
       display: flex; flex-direction: column;
     }
 
-    /* ── Header ── */
+    /* ── Header (centered) ── */
     #header {
-      display: flex; align-items: center; justify-content: space-between;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
       padding: 1.5vh 4vw;
       border-bottom: 2px solid #FFD700;
       flex-shrink: 0;
     }
-    #header-left { display: flex; align-items: center; gap: 1.5vw; }
-    #title { color: #FFD700; font-size: clamp(0.9rem, 2.4vw, 2rem); letter-spacing: 0.1em; }
+    #header-center { display: flex; align-items: center; gap: 1.5vw; }
+    #title { color: #FFD700; font-size: clamp(1.2rem, 3.4vw, 2.8rem); letter-spacing: 0.1em; }
 
-    #live { display: flex; align-items: center; gap: 0.6vw; }
+    #live { position: absolute; right: 4vw; display: flex; align-items: center; gap: 0.6vw; }
     #live-dot {
       width: clamp(8px, 1vw, 14px); height: clamp(8px, 1vw, 14px);
       border-radius: 50%; background: #00FF41;
@@ -53,20 +54,50 @@
     }
     @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    /* ── Column headers ── */
+    /* ── Podium (top 3) ── */
+    #podium {
+      flex-shrink: 0;
+      padding: 1.2vh 4vw 0.8vh;
+      display: flex; flex-direction: column;
+      gap: 0.8vh;
+    }
+    #podium-top  { display: flex; justify-content: center; }
+    #podium-base { display: flex; gap: 2vw; }
+
+    .podium-slot {
+      display: flex; align-items: center;
+      padding: 1.2vh 2vw;
+      border: 1px solid rgba(255,215,0,0.15);
+      border-radius: 3px;
+      gap: 2vw;
+    }
+    #pod-1 { width: 60vw; border-color: rgba(255,215,0,0.38); }
+    #pod-2, #pod-3 { flex: 1; }
+
+    .pod-rank  { flex-shrink: 0; font-size: clamp(0.5rem, 1.05vw, 0.88rem); }
+    .pod-name  { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+                 font-size: clamp(0.6rem, 1.45vw, 1.2rem); }
+    .pod-score { flex-shrink: 0; font-variant-numeric: tabular-nums;
+                 font-size: clamp(0.6rem, 1.45vw, 1.2rem); }
+
+    #pod-1 .pod-rank  { font-size: clamp(0.6rem, 1.3vw, 1.08rem); }
+    #pod-1 .pod-name  { font-size: clamp(0.7rem, 1.85vw, 1.55rem); }
+    #pod-1 .pod-score { font-size: clamp(0.7rem, 1.85vw, 1.55rem); }
+
+    /* ── Column headers (list) ── */
     #col-headers {
       display: flex; align-items: center;
-      padding: 0 4vw 0.8vh;
+      padding: 0.8vh 4vw 0.4vh;
       color: rgba(255,215,0,0.4);
       font-size: clamp(0.3rem, 0.65vw, 0.55rem);
       letter-spacing: 0.14em;
       flex-shrink: 0;
     }
 
-    /* ── Rows ── */
+    /* ── Rows (4–10) ── */
     #rows {
       flex: 1; display: flex; flex-direction: column;
-      padding: 0 4vw 2vh; gap: 0.2vh;
+      padding: 0 4vw 1.5vh; gap: 0.2vh;
     }
 
     .row {
@@ -75,12 +106,9 @@
       animation: slideIn 0.38s ease both;
     }
     .row.placeholder { opacity: 0.18; }
-    .row.flash { animation: flashRow 0.55s ease !important; }
 
     @keyframes slideIn { from{opacity:0;transform:translateX(-50px)} to{opacity:1;transform:translateX(0)} }
-    @keyframes flashRow { 0%,100%{background:transparent} 50%{background:rgba(255,215,0,0.13)} }
 
-    /* ── Cell widths ── */
     .col-rank  { width: 10vw; text-align: right; flex-shrink: 0; }
     .col-name  { flex: 1; padding-left: 3vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .col-score { width: 15vw; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
@@ -113,8 +141,8 @@
 <div id="app">
 
   <div id="header">
-    <div id="header-left">
-      <svg width="40" height="40" viewBox="0 0 48 48" style="width:clamp(22px,3.2vw,44px);height:clamp(22px,3.2vw,44px)">
+    <div id="header-center">
+      <svg id="pacman-icon" width="40" height="40" viewBox="0 0 48 48" style="width:clamp(30px,4.6vw,62px);height:clamp(30px,4.6vw,62px)">
         <path d="M24 24 L46 9 A23 23 0 1 0 46 39 Z" fill="#FFD700"/>
       </svg>
       <span id="title"><span class="letter">H</span><span class="letter">I</span><span class="letter">G</span><span class="letter">H</span><span class="letter">&nbsp;</span><span class="letter">S</span><span class="letter">C</span><span class="letter">O</span><span class="letter">R</span><span class="letter">E</span><span class="letter">S</span></span>
@@ -126,6 +154,28 @@
   </div>
 
   <div id="marquee-wrap"><span id="marquee-track"></span></div>
+
+  <div id="podium">
+    <div id="podium-top">
+      <div class="podium-slot" id="pod-1">
+        <span class="pod-rank"></span>
+        <span class="pod-name"></span>
+        <span class="pod-score"></span>
+      </div>
+    </div>
+    <div id="podium-base">
+      <div class="podium-slot" id="pod-2">
+        <span class="pod-rank"></span>
+        <span class="pod-name"></span>
+        <span class="pod-score"></span>
+      </div>
+      <div class="podium-slot" id="pod-3">
+        <span class="pod-rank"></span>
+        <span class="pod-name"></span>
+        <span class="pod-score"></span>
+      </div>
+    </div>
+  </div>
 
   <div id="col-headers">
     <span class="col-rank">RANK</span>
@@ -150,17 +200,30 @@
   function rankLabel(r) { return RANK_LABELS[r] || `${r}TH`; }
   function rankClass(r) { return RANK_COLORS[r] || 'normal'; }
 
-  let initialized = false;
+  // ── Podium (top 3) ──
+  function renderPodium(top3) {
+    [1, 2, 3].forEach(rank => {
+      const p    = top3[rank - 1] || null;
+      const slot = document.getElementById(`pod-${rank}`);
+      const cls  = p ? rankClass(rank) : 'empty';
+      const rEl  = slot.querySelector('.pod-rank');
+      const nEl  = slot.querySelector('.pod-name');
+      const sEl  = slot.querySelector('.pod-score');
+      rEl.className = `pod-rank ${cls}`;   rEl.textContent = rankLabel(rank);
+      nEl.className = `pod-name ${cls}`;   nEl.textContent = p ? p.name : '———';
+      sEl.className = `pod-score ${cls}`;  sEl.textContent = p ? p.score.toLocaleString('no-NO') : '· · ·';
+    });
+  }
 
-  function renderRows(players) {
+  // ── List (4th–10th) ──
+  let listInitialized = false;
+
+  function renderList(players) {
     const container = document.getElementById('rows');
-    const rows = [...players];
-    while (rows.length < 10) rows.push(null);
 
-    // First render: build all 10 row elements with slide-in animation
-    if (!initialized) {
+    if (!listInitialized) {
       container.innerHTML = '';
-      rows.forEach((p, i) => {
+      players.forEach((p, i) => {
         const div = document.createElement('div');
         div.className = 'row' + (p ? '' : ' placeholder');
         div.style.animationDelay = `${i * 0.055}s`;
@@ -171,30 +234,29 @@
         `;
         container.appendChild(div);
       });
-      initialized = true;
+      listInitialized = true;
     }
 
-    // All subsequent renders: update text/classes in-place — no DOM rebuild, no flash
     const divs = container.querySelectorAll('.row');
-    rows.forEach((p, i) => {
-      const rank = i + 1;
+    players.forEach((p, i) => {
+      const rank = i + 4;
       const cls  = p ? rankClass(rank) : 'empty';
       const div  = divs[i];
       div.className = 'row' + (p ? '' : ' placeholder');
-
-      div.querySelector('.col-rank').className = `col-rank rank-num ${cls}`;
+      div.querySelector('.col-rank').className  = `col-rank rank-num ${cls}`;
       div.querySelector('.col-rank').textContent = rankLabel(rank);
-
-      div.querySelector('.col-name').className = `col-name name-text ${cls}`;
+      div.querySelector('.col-name').className  = `col-name name-text ${cls}`;
       div.querySelector('.col-name').textContent = p ? p.name : '———';
-
-      div.querySelector('.col-score').className = `col-score score-num ${cls}`;
+      div.querySelector('.col-score').className  = `col-score score-num ${cls}`;
       div.querySelector('.col-score').textContent = p ? p.score.toLocaleString('no-NO') : '· · ·';
     });
   }
 
-  function escHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  function renderRows(players) {
+    const padded = [...players];
+    while (padded.length < 10) padded.push(null);
+    renderPodium(padded.slice(0, 3));
+    renderList(padded.slice(3, 10));
   }
 
   function fromBase64(str) {
@@ -226,29 +288,24 @@
     const pac     = document.getElementById('pacman-icon');
     const title   = document.getElementById('title');
     const letters = [...title.querySelectorAll('.letter')];
-    if (pac.classList.contains('eating')) return; // already running
+    if (pac.classList.contains('eating')) return;
 
-    // Distance Pac-Man must travel = gap + full title width
-    const gap      = pac.getBoundingClientRect().right - pac.parentElement.getBoundingClientRect().left;
-    const dist     = gap + title.getBoundingClientRect().width + pac.getBoundingClientRect().width;
+    const gap  = pac.getBoundingClientRect().right - pac.parentElement.getBoundingClientRect().left;
+    const dist = gap + title.getBoundingClientRect().width + pac.getBoundingClientRect().width;
 
-    // 1. Start moving + chomping
     pac.classList.add('eating');
     pac.style.transform = `translateX(${dist}px)`;
 
-    // 2. Eat letters staggered over 1.3s
     const eatDuration = 1300;
     letters.forEach((l, i) => {
       setTimeout(() => l.classList.add('eaten'), (i / letters.length) * eatDuration);
     });
 
-    // 3. After slide completes: snap Pac-Man back instantly
     setTimeout(() => {
-      pac.classList.remove('eating');       // remove transition
-      pac.style.transform = 'translateX(0)'; // snap back
+      pac.classList.remove('eating');
+      pac.style.transform = 'translateX(0)';
     }, 1600);
 
-    // 4. Restore letters one by one
     setTimeout(() => {
       letters.forEach((l, i) => {
         setTimeout(() => l.classList.remove('eaten'), i * 55);
