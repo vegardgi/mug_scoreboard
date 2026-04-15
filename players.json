@@ -80,6 +80,15 @@
       "email": "vegard@asd.no",
       "phone": "4125155",
       "createdAt": "2026-04-15T10:11:57.386Z"
+    },
+    {
+      "id": 1776248203334,
+      "name": "Ida Oline",
+      "score": 50000,
+      "age": 124,
+      "email": "veg@asf.no",
+      "phone": "4124",
+      "createdAt": "2026-04-15T10:16:43.334Z"
     }
   ]
 }
