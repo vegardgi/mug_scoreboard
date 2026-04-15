@@ -89,6 +89,15 @@
       "email": "veg@asf.no",
       "phone": "4124",
       "createdAt": "2026-04-15T10:16:43.334Z"
+    },
+    {
+      "id": 1776248342750,
+      "name": "Vegard",
+      "score": 60000,
+      "age": 124,
+      "email": "123@sad.no",
+      "phone": "12521",
+      "createdAt": "2026-04-15T10:19:02.750Z"
     }
   ]
 }
