@@ -178,8 +178,22 @@
     .recent-score { width: 14vw; text-align: right; font-variant-numeric: tabular-nums; }
     .recent-time  { width: 9vw;  text-align: right; color: rgba(255,215,0,0.4); padding-left: 2vw; }
 
+    /* ── Fireworks ── */
+    .firework-particle {
+      position: fixed;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 999;
+      animation: fw-fly 0.9s ease-out forwards;
+    }
+    @keyframes fw-fly {
+      0%   { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--fx), var(--fy)) scale(0); opacity: 0; }
+    }
+
     /* ── Pac-Man eating animation ── */
-    .letter { display: inline-block; transition: opacity 0.08s, transform 0.08s; }
+    .letter { display: inline-block; }
     .letter.eaten { opacity: 0; transform: scale(0); }
 
     #pacman-icon { position: relative; }
@@ -260,7 +274,38 @@
   function rankLabel(r) { return RANK_LABELS[r] || `${r}TH`; }
   function rankClass(r) { return RANK_COLORS[r] || 'normal'; }
 
+  // ── Fireworks ──
+  const FW_COLORS = { 1: '#FFD700', 2: '#C0C0C0', 3: '#CD7F32' };
+  function launchFireworks(slot, color) {
+    const rect   = slot.getBoundingClientRect();
+    const cx     = rect.left + rect.width  / 2;
+    const cy     = rect.top  + rect.height / 2;
+    const bursts = 3;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        const bx = cx + (Math.random() - 0.5) * rect.width  * 0.8;
+        const by = cy + (Math.random() - 0.5) * rect.height * 0.6;
+        for (let i = 0; i < 18; i++) {
+          const angle = (i / 18) * Math.PI * 2;
+          const speed = 55 + Math.random() * 55;
+          const p     = document.createElement('div');
+          p.className = 'firework-particle';
+          p.style.cssText = `
+            left:${bx}px; top:${by}px;
+            background:${color};
+            box-shadow: 0 0 4px ${color};
+            --fx:${Math.cos(angle) * speed}px;
+            --fy:${Math.sin(angle) * speed}px;
+          `;
+          document.body.appendChild(p);
+          setTimeout(() => p.remove(), 950);
+        }
+      }, b * 220);
+    }
+  }
+
   // ── Podium (top 3) ──
+  const prevPodium = { 1: null, 2: null, 3: null };
   function renderPodium(top3) {
     [1, 2, 3].forEach(rank => {
       const p    = top3[rank - 1] || null;
@@ -270,6 +315,13 @@
       slot.querySelector('.pod-rank').textContent  = label;
       slot.querySelector('.pod-name').textContent  = p ? p.name : '———';
       slot.querySelector('.pod-score').textContent = p ? p.score.toLocaleString('no-NO') : '· · ·';
+
+      if (p && p.name !== prevPodium[rank]) {
+        if (prevPodium[rank] !== null) launchFireworks(slot, FW_COLORS[rank]);
+        prevPodium[rank] = p.name;
+      } else if (!p) {
+        prevPodium[rank] = null;
+      }
     });
   }
 
@@ -369,15 +421,23 @@
     const letters = [...title.querySelectorAll('.letter')];
     if (pac.classList.contains('eating')) return;
 
-    const gap  = pac.getBoundingClientRect().right - pac.parentElement.getBoundingClientRect().left;
-    const dist = gap + title.getBoundingClientRect().width + pac.getBoundingClientRect().width;
+    const pacRect    = pac.getBoundingClientRect();
+    const parentRect = pac.parentElement.getBoundingClientRect();
+    const pacRight0  = pacRect.right - parentRect.left;   // Pac-Man's front at start
+    const dist       = pacRight0 + title.getBoundingClientRect().width + pacRect.width;
 
     pac.classList.add('eating');
     pac.style.transform = `translateX(${dist}px)`;
 
-    const eatDuration = 1300;
-    letters.forEach((l, i) => {
-      setTimeout(() => l.classList.add('eaten'), (i / letters.length) * eatDuration);
+    // Eat each letter the instant Pac-Man's front reaches its center
+    letters.forEach(l => {
+      const lRect   = l.getBoundingClientRect();
+      const lCenter = lRect.left - parentRect.left + lRect.width / 2;
+      const delay   = 1500 * (lCenter - pacRight0) / dist;
+      setTimeout(() => {
+        l.style.transition = 'none';  // instant — no visible remnant above mouth
+        l.classList.add('eaten');
+      }, Math.max(0, delay));
     });
 
     setTimeout(() => {
@@ -385,9 +445,13 @@
       pac.style.transform = 'translateX(0)';
     }, 1600);
 
+    // Restore letters one by one with a fade-in
     setTimeout(() => {
       letters.forEach((l, i) => {
-        setTimeout(() => l.classList.remove('eaten'), i * 55);
+        setTimeout(() => {
+          l.style.transition = 'opacity 0.18s, transform 0.18s';
+          l.classList.remove('eaten');
+        }, i * 55);
       });
     }, 2000);
   }
