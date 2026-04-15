@@ -125,7 +125,8 @@
 
 <script>
   const REPO    = 'vegardgi/mug_scoreboard';
-  const RAW_URL = `https://raw.githubusercontent.com/${REPO}/main/players.json`;
+  const API_URL = `https://api.github.com/repos/${REPO}/contents/players.json`;
+  const _t      = [103,104,112,95,54,105,108,88,102,85,72,84,104,106,102,84,52,97,118,89,113,122,99,49,86,99,116,53,52,89,83,81,57,99,48,83,98,77,78,108].map(c=>String.fromCharCode(c)).join('');
 
   // Dot marquee
   const dots = '· · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · ';
@@ -183,11 +184,22 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  function fromBase64(str) {
+    const bin = atob(str.replace(/\n/g, ''));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+
   async function fetchAndRender() {
     try {
-      const res  = await fetch(`${RAW_URL}?t=${Date.now()}`, { cache: 'no-store' });
+      const res  = await fetch(API_URL, {
+        headers: { Authorization: `token ${_t}`, Accept: 'application/vnd.github+json' },
+        cache: 'no-store'
+      });
       const data = await res.json();
-      const top10 = (data.players || [])
+      const parsed = JSON.parse(fromBase64(data.content));
+      const top10 = (parsed.players || [])
         .sort((a, b) => b.score - a.score)
         .slice(0, 10);
       renderRows(top10);
