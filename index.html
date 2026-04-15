@@ -280,13 +280,20 @@
     2: { color:'#C0C0C0', bursts: 8, interval:300, particles:26, sMin: 7, sMax:15, vMin: 90, vMax:190, animMs:1100 },
     3: { color:'#CD7F32', bursts: 8, interval:300, particles:26, sMin: 7, sMax:15, vMin: 90, vMax:190, animMs:1100 },
   };
+  let fwTimers = [];
+  function cancelAllFireworks() {
+    fwTimers.forEach(t => clearTimeout(t));
+    fwTimers = [];
+    document.querySelectorAll('.firework-particle').forEach(p => p.remove());
+  }
   function launchFireworks(slot, rank) {
+    cancelAllFireworks();
     const cfg  = FW_CFG[rank];
     const rect = slot.getBoundingClientRect();
     const cx   = rect.left + rect.width  / 2;
     const cy   = rect.top  + rect.height / 2;
     for (let b = 0; b < cfg.bursts; b++) {
-      setTimeout(() => {
+      fwTimers.push(setTimeout(() => {
         const bx = cx + (Math.random() - 0.5) * rect.width  * 0.9;
         const by = cy + (Math.random() - 0.5) * rect.height * 0.7;
         for (let i = 0; i < cfg.particles; i++) {
@@ -305,9 +312,9 @@
             --fy:${Math.sin(angle) * speed}px;
           `;
           document.body.appendChild(p);
-          setTimeout(() => p.remove(), cfg.animMs + 50);
+          fwTimers.push(setTimeout(() => p.remove(), cfg.animMs + 50));
         }
-      }, b * cfg.interval);
+      }, b * cfg.interval));
     }
   }
 
