@@ -151,11 +151,11 @@
       <thead>
         <tr>
           <th>#</th><th>Navn</th><th>Score</th>
-          <th>Alder</th><th>E-post</th><th>Telefon</th><th>Handlinger</th>
+          <th>Alder</th><th>E-post</th><th>Telefon</th><th>Lagt til</th><th>Handlinger</th>
         </tr>
       </thead>
       <tbody id="player-tbody">
-        <tr><td colspan="7" class="no-players">Laster...</td></tr>
+        <tr><td colspan="8" class="no-players">Laster...</td></tr>
       </tbody>
     </table>
   </div>
@@ -238,6 +238,11 @@
   function escHtml(s) {
     return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
+  function fmtTimestamp(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleString('no-NO', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+  }
 
   // ── GitHub API ──
   async function loadPlayers() {
@@ -278,7 +283,7 @@
       `${players.length} spiller${players.length !== 1 ? 'e' : ''} totalt`;
 
     if (players.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" class="no-players">Ingen spillere ennå — legg til den første!</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="no-players">Ingen spillere ennå — legg til den første!</td></tr>';
       return;
     }
 
@@ -289,7 +294,7 @@
           <td class="td-rank">${i+1}</td>
           <td class="td-name">${escHtml(p.name)}</td>
           <td class="td-score">${p.score.toLocaleString('no-NO')}</td>
-          <td colspan="3" class="td-meta">—</td>
+          <td colspan="4" class="td-meta">—</td>
           <td class="td-actions">
             <span class="confirm-inline">
               <span class="confirm-label">Sikker?</span>
@@ -306,6 +311,7 @@
         <td class="${p.age   != null ? 'td-meta':'td-empty'}">${p.age   != null ? p.age          : '—'}</td>
         <td class="${p.email ? 'td-meta':'td-empty'}">${p.email ? escHtml(p.email) : '—'}</td>
         <td class="${p.phone ? 'td-meta':'td-empty'}">${p.phone ? escHtml(p.phone) : '—'}</td>
+        <td class="td-meta">${fmtTimestamp(p.createdAt)}</td>
         <td class="td-actions">
           <button class="btn btn-edit"   onclick="openEditModal(${p.id})">Rediger</button>
           <button class="btn btn-delete" onclick="startDelete(${p.id})">Slett</button>
@@ -379,7 +385,7 @@
         await savePlayers(`Oppdater spiller: ${name}`);
         showStatus(`${name} er oppdatert.`, 'success');
       } else {
-        players.push({ id: Date.now(), name, score, age, email, phone });
+        players.push({ id: Date.now(), name, score, age, email, phone, createdAt: new Date().toISOString() });
         await savePlayers(`Legg til spiller: ${name}`);
         showStatus(`${name} er lagt til.`, 'success');
       }

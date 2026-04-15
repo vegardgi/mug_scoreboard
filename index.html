@@ -156,6 +156,28 @@
     .normal { color: #ffffff; }
     .empty  { color: #3a3a3a; }
 
+    /* ── Recent additions ── */
+    #recent-wrap {
+      flex-shrink: 0;
+      padding: 0.5vh 4vw 0.8vh;
+      border-top: 1px solid rgba(255,215,0,0.15);
+    }
+    #recent-header {
+      color: rgba(255,215,0,0.35);
+      font-size: clamp(0.28rem, 0.58vw, 0.48rem);
+      letter-spacing: 0.16em;
+      margin-bottom: 0.4vh;
+    }
+    #recent-list { display: flex; flex-direction: column; gap: 0.15vh; }
+    .recent-row {
+      display: flex; align-items: center;
+      font-size: clamp(0.42rem, 0.88vw, 0.74rem);
+      color: rgba(255,255,255,0.38);
+    }
+    .recent-name  { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 1vw; }
+    .recent-score { width: 12vw; text-align: right; font-variant-numeric: tabular-nums; }
+    .recent-time  { width: 8vw;  text-align: right; color: rgba(255,215,0,0.3); padding-left: 2vw; }
+
     /* ── Pac-Man eating animation ── */
     .letter { display: inline-block; transition: opacity 0.08s, transform 0.08s; }
     .letter.eaten { opacity: 0; transform: scale(0.2); }
@@ -217,6 +239,11 @@
   </div>
 
   <div id="rows"></div>
+
+  <div id="recent-wrap">
+    <div id="recent-header">SIST LAGT TIL</div>
+    <div id="recent-list"></div>
+  </div>
 </div>
 
 <script>
@@ -290,6 +317,23 @@
     renderList(padded.slice(3, 10));
   }
 
+  // ── Recent additions ──
+  function fmtTime(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleTimeString('no-NO', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function renderRecent(recent) {
+    const list = document.getElementById('recent-list');
+    list.innerHTML = recent.map(p => `
+      <div class="recent-row">
+        <span class="recent-name">${p.name}</span>
+        <span class="recent-score">${p.score.toLocaleString('no-NO')}</span>
+        <span class="recent-time">${fmtTime(p.createdAt)}</span>
+      </div>`).join('');
+  }
+
   function fromBase64(str) {
     const bin = atob(str.replace(/\n/g, ''));
     const bytes = new Uint8Array(bin.length);
@@ -305,10 +349,14 @@
       });
       const data = await res.json();
       const parsed = JSON.parse(fromBase64(data.content));
-      const top10 = (parsed.players || [])
-        .sort((a, b) => b.score - a.score)
+      const all    = parsed.players || [];
+      const top10  = [...all].sort((a, b) => b.score - a.score).slice(0, 10);
+      const recent = [...all]
+        .filter(p => p.createdAt)
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 10);
       renderRows(top10);
+      renderRecent(recent);
     } catch {
       // Keep showing current data on network error
     }
