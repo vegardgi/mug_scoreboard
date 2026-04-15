@@ -81,6 +81,18 @@
     .confirm-label  { color: #f44336; font-size: 0.75rem; }
     .no-players { text-align: center; padding: 3rem; color: #444; }
 
+    /* ── Danger zone ── */
+    #danger-zone {
+      margin-top: 3rem; padding: 1.5rem;
+      border: 1px solid #3a1a1a; border-radius: 6px;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    #danger-zone p { color: #666; font-size: 0.78rem; }
+    #delete-all-confirm {
+      display: none; align-items: center; gap: 0.5rem;
+    }
+    #delete-all-confirm.visible { display: flex; }
+
     /* ── Modal ── */
     #modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 100;
@@ -159,7 +171,17 @@
         <tr><td colspan="8" class="no-players">Laster...</td></tr>
       </tbody>
     </table>
-  </div>
+    <div id="danger-zone">
+      <p>Slett alle spillere permanent. Kan ikke angres.</p>
+      <div>
+        <button class="btn btn-delete" onclick="startDeleteAll()">Slett alle brukere</button>
+        <div id="delete-all-confirm">
+          <span class="confirm-label">Er du helt sikker?</span>
+          <button class="btn btn-confirm" onclick="confirmDeleteAll()">Ja, slett alle</button>
+          <button class="btn btn-cancel"  onclick="cancelDeleteAll()">Avbryt</button>
+        </div>
+      </div>
+    </div>
 </div>
 
 <!-- ── Modal ── -->
@@ -409,6 +431,26 @@
     try {
       await savePlayers(`Slett spiller: ${name}`);
       renderTable(); showStatus(`${name} er slettet.`, 'success');
+    } catch {
+      showStatus('Sletting feilet.', 'error'); loadPlayers();
+    }
+  }
+
+  // ── Delete all ──
+  function startDeleteAll() {
+    document.getElementById('delete-all-confirm').classList.add('visible');
+  }
+  function cancelDeleteAll() {
+    document.getElementById('delete-all-confirm').classList.remove('visible');
+  }
+  async function confirmDeleteAll() {
+    cancelDeleteAll();
+    const count = players.length;
+    players = [];
+    try {
+      await savePlayers('Slett alle spillere');
+      renderTable();
+      showStatus(`${count} spiller${count !== 1 ? 'e' : ''} slettet.`, 'success');
     } catch {
       showStatus('Sletting feilet.', 'error'); loadPlayers();
     }
