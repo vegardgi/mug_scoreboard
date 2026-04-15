@@ -6,7 +6,62 @@
       "score": 13050,
       "age": 34,
       "email": "adamjhalsall@gmail.com",
-      "phone": null
+      "phone": null,
+      "createdAt": "2026-04-15T08:00:00.000Z"
+    },
+    {
+      "id": 1776300000001,
+      "name": "Runar",
+      "score": 8740,
+      "age": 32,
+      "email": "runar@example.com",
+      "phone": "90123456",
+      "createdAt": "2026-04-15T08:04:00.000Z"
+    },
+    {
+      "id": 1776300000002,
+      "name": "Ida Oline",
+      "score": 15280,
+      "age": 27,
+      "email": "ida.oline@example.com",
+      "phone": "91234567",
+      "createdAt": "2026-04-15T08:08:00.000Z"
+    },
+    {
+      "id": 1776300000003,
+      "name": "Mariann",
+      "score": 11650,
+      "age": 35,
+      "email": "mariann@example.com",
+      "phone": "92345678",
+      "createdAt": "2026-04-15T08:12:00.000Z"
+    },
+    {
+      "id": 1776300000004,
+      "name": "Lillian",
+      "score": 6390,
+      "age": 41,
+      "email": "lillian@example.com",
+      "phone": "93456789",
+      "createdAt": "2026-04-15T08:16:00.000Z"
+    },
+    {
+      "id": 1776300000005,
+      "name": "Vegard",
+      "score": 19920,
+      "age": 29,
+      "email": "vegard@example.com",
+      "phone": "94567890",
+      "createdAt": "2026-04-15T08:20:00.000Z"
+    },
+    {
+      "id": 1776300000006,
+      "name": "Christine",
+      "score": 4130,
+      "age": 38,
+      "email": "christine@example.com",
+      "phone": "95678901",
+      "createdAt": "2026-04-15T08:24:00.000Z"
     }
   ]
 }
