@@ -10,15 +10,6 @@
       "createdAt": "2026-04-15T08:00:00.000Z"
     },
     {
-      "id": 1776300000001,
-      "name": "Runar",
-      "score": 8740,
-      "age": 32,
-      "email": "runar@example.com",
-      "phone": "90123456",
-      "createdAt": "2026-04-15T08:04:00.000Z"
-    },
-    {
       "id": 1776300000002,
       "name": "Ida Oline",
       "score": 15280,
