@@ -55,15 +55,6 @@
       "createdAt": "2026-04-15T08:20:00.000Z"
     },
     {
-      "id": 1776300000006,
-      "name": "Christine",
-      "score": 4130,
-      "age": 38,
-      "email": "christine@example.com",
-      "phone": "95678901",
-      "createdAt": "2026-04-15T08:24:00.000Z"
-    },
-    {
       "id": 1776247824790,
       "name": "Adam Halsall",
       "score": 30000,
