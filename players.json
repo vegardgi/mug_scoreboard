@@ -8,6 +8,15 @@
       "email": "idaolineluvsjb@mug.no",
       "phone": "234567898",
       "createdAt": "2026-04-16T07:24:43.990Z"
+    },
+    {
+      "id": 1776340212205,
+      "name": "123",
+      "score": 10,
+      "age": 2,
+      "email": "vg@safd.no",
+      "phone": "3",
+      "createdAt": "2026-04-16T11:50:12.205Z"
     }
   ]
 }
