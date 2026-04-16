@@ -17,6 +17,15 @@
       "email": "vg@safd.no",
       "phone": "3",
       "createdAt": "2026-04-16T11:50:12.205Z"
+    },
+    {
+      "id": 1776340340051,
+      "name": "test",
+      "score": 20,
+      "age": 123,
+      "email": "vr@fas.no",
+      "phone": "214",
+      "createdAt": "2026-04-16T11:52:20.051Z"
     }
   ]
 }
