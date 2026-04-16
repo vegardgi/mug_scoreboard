@@ -35,6 +35,15 @@
       "email": "ve@ga.mo",
       "phone": "35",
       "createdAt": "2026-04-16T11:53:29.451Z"
+    },
+    {
+      "id": 1776341753363,
+      "name": "Mariann",
+      "score": 1000,
+      "age": 50,
+      "email": "vegardgi@gmail.com",
+      "phone": "98053199",
+      "createdAt": "2026-04-16T12:15:53.363Z"
     }
   ]
 }
