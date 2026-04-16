@@ -344,6 +344,11 @@
     // Fire once, for the highest-priority changed slot
     if (triggerRank !== null) {
       launchFireworks(document.getElementById(`pod-${triggerRank}`), triggerRank);
+      if (triggerRank === 1) {
+        const audio = new Audio('fanfare.mp3');
+        audio.volume = 1.0;
+        audio.play().catch(() => {});
+      }
     }
   }
 
