@@ -28,15 +28,6 @@
       "createdAt": "2026-04-15T08:12:00.000Z"
     },
     {
-      "id": 1776300000004,
-      "name": "Lillian",
-      "score": 6390,
-      "age": 41,
-      "email": "lillian@example.com",
-      "phone": "93456789",
-      "createdAt": "2026-04-15T08:16:00.000Z"
-    },
-    {
       "id": 1776300000005,
       "name": "Vegard",
       "score": 19920,
