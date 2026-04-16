@@ -1,15 +1,6 @@
 {
   "players": [
     {
-      "id": 1776245769578,
-      "name": "Adam Halsall",
-      "score": 13050,
-      "age": 34,
-      "email": "adamjhalsall@gmail.com",
-      "phone": null,
-      "createdAt": "2026-04-15T08:00:00.000Z"
-    },
-    {
       "id": 1776300000002,
       "name": "Ida Oline",
       "score": 15280,
