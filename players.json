@@ -1,3 +1,13 @@
 {
-  "players": []
+  "players": [
+    {
+      "id": 1776324283990,
+      "name": "Ida Oline",
+      "score": 1,
+      "age": 13,
+      "email": "idaolineluvsjb@mug.no",
+      "phone": "234567898",
+      "createdAt": "2026-04-16T07:24:43.990Z"
+    }
+  ]
 }
