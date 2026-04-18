@@ -161,6 +161,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T12:55:36.204Z"
+    },
+    {
+      "id": 1776517423689,
+      "name": "Micael",
+      "score": 6250,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T13:03:43.689Z"
     }
   ]
 }
