@@ -1,3 +1,13 @@
 {
-  "players": []
+  "players": [
+    {
+      "id": 1776508961007,
+      "name": "Truls Petrus",
+      "score": 1000,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T10:42:41.007Z"
+    }
+  ]
 }
