@@ -8,6 +8,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T10:42:41.007Z"
+    },
+    {
+      "id": 1776508974451,
+      "name": "Jan Gustav",
+      "score": 1136,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T10:42:54.451Z"
     }
   ]
 }
