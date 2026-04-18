@@ -179,6 +179,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T13:12:14.636Z"
+    },
+    {
+      "id": 1776519083964,
+      "name": "Edvald",
+      "score": 3050,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T13:31:23.964Z"
     }
   ]
 }
