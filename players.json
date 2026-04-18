@@ -260,6 +260,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T14:27:44.993Z"
+    },
+    {
+      "id": 1776523586891,
+      "name": "Mathias",
+      "score": 4220,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T14:46:26.891Z"
     }
   ]
 }
