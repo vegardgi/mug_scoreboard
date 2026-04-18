@@ -251,6 +251,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T14:10:57.544Z"
+    },
+    {
+      "id": 1776522464993,
+      "name": "Fredrik",
+      "score": 2890,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T14:27:44.993Z"
     }
   ]
 }
