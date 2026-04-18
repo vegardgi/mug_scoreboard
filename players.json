@@ -269,6 +269,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T14:46:26.891Z"
+    },
+    {
+      "id": 1776523614678,
+      "name": "Vetle Giskehaug",
+      "score": 5520,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T14:46:54.678Z"
     }
   ]
 }
