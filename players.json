@@ -278,6 +278,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T14:46:54.678Z"
+    },
+    {
+      "id": 1776523712304,
+      "name": "Daniel",
+      "score": 3200,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T14:48:32.304Z"
     }
   ]
 }
