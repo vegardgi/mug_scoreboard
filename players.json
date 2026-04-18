@@ -458,6 +458,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T17:15:07.628Z"
+    },
+    {
+      "id": 1776534509640,
+      "name": "Olav",
+      "score": 4360,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T17:48:29.640Z"
     }
   ]
 }
