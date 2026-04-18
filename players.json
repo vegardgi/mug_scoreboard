@@ -152,6 +152,15 @@
       "email": "torgeirg@hotmail.com",
       "phone": "96044168",
       "createdAt": "2026-04-18T12:37:59.728Z"
+    },
+    {
+      "id": 1776516936204,
+      "name": "Vetle",
+      "score": 2650,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T12:55:36.204Z"
     }
   ]
 }
