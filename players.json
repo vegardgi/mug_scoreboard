@@ -71,6 +71,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T10:45:37.008Z"
+    },
+    {
+      "id": 1776509182306,
+      "name": "Jonas Gahr Støre",
+      "score": 1950,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T10:46:22.306Z"
     }
   ]
 }
