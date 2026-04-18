@@ -440,6 +440,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T17:04:17.469Z"
+    },
+    {
+      "id": 1776532202337,
+      "name": "Kasper",
+      "score": 6500,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T17:10:02.337Z"
     }
   ]
 }
