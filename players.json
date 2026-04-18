@@ -485,6 +485,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T18:50:46.382Z"
+    },
+    {
+      "id": 1776538289043,
+      "name": "Aron",
+      "score": 6310,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T18:51:29.043Z"
     }
   ]
 }
