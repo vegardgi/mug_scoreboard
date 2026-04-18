@@ -350,6 +350,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T16:16:29.612Z"
+    },
+    {
+      "id": 1776529568078,
+      "name": "Rikard",
+      "score": 10980,
+      "age": 26,
+      "email": null,
+      "phone": "41632617",
+      "createdAt": "2026-04-18T16:26:08.078Z"
     }
   ]
 }
