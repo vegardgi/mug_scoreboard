@@ -17,6 +17,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T10:42:54.451Z"
+    },
+    {
+      "id": 1776508996317,
+      "name": "Atle Furuborgsheim",
+      "score": 1450,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T10:43:16.317Z"
     }
   ]
 }
