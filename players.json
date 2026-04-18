@@ -296,6 +296,15 @@
       "email": null,
       "phone": "40166167",
       "createdAt": "2026-04-18T15:01:52.591Z"
+    },
+    {
+      "id": 1776524665895,
+      "name": "Amalie",
+      "score": 3170,
+      "age": 15,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T15:04:25.895Z"
     }
   ]
 }
