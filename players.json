@@ -107,6 +107,15 @@
       "email": null,
       "phone": "47687500",
       "createdAt": "2026-04-18T11:41:07.943Z"
+    },
+    {
+      "id": 1776512942325,
+      "name": "Nure",
+      "score": 0,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T11:49:02.325Z"
     }
   ]
 }
