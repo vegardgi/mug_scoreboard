@@ -422,6 +422,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T16:59:50.754Z"
+    },
+    {
+      "id": 1776531727577,
+      "name": "Joel",
+      "score": 2410,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T17:02:07.577Z"
     }
   ]
 }
