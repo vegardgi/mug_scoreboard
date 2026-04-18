@@ -125,6 +125,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T11:49:28.551Z"
+    },
+    {
+      "id": 1776514218345,
+      "name": "Erlend",
+      "score": 9890,
+      "age": null,
+      "email": null,
+      "phone": "98455574",
+      "createdAt": "2026-04-18T12:10:18.345Z"
     }
   ]
 }
