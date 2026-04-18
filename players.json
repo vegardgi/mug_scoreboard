@@ -332,6 +332,15 @@
       "email": "vegardsteinnes1@gmail.com",
       "phone": "40049027",
       "createdAt": "2026-04-18T15:18:29.645Z"
+    },
+    {
+      "id": 1776526380109,
+      "name": "Iver Giskehaug",
+      "score": 3360,
+      "age": null,
+      "email": null,
+      "phone": null,
+      "createdAt": "2026-04-18T15:33:00.109Z"
     }
   ]
 }
