@@ -323,6 +323,15 @@
       "email": null,
       "phone": null,
       "createdAt": "2026-04-18T15:12:24.495Z"
+    },
+    {
+      "id": 1776525509645,
+      "name": "Vegard",
+      "score": 7360,
+      "age": 23,
+      "email": "vegardsteinnes1@gmail.com",
+      "phone": "40049027",
+      "createdAt": "2026-04-18T15:18:29.645Z"
     }
   ]
 }
